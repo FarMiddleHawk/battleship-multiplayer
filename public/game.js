@@ -33,11 +33,16 @@ const overlayText = document.getElementById("overlayText");
 const overlayBtn = document.getElementById("overlayBtn");
 
 createBtn.onclick = () => {
+  console.log("Create game clicked");
   socket.emit("createGame", (res) => {
+    console.log("Create game response:", res);
     if (res.error) return alert(res.error);
     state.gameId = res.gameId;
     state.playerId = res.playerId;
+    console.log("Game ID:", res.gameId);
     gameIdDisplay.textContent = `Game ID: ${res.gameId} (Share this with your opponent)`;
+    gameIdDisplay.style.display = "block";
+    console.log("Game ID display set to:", gameIdDisplay.textContent);
     lobbyScreen.classList.add("hidden");
     gameScreen.classList.remove("hidden");
     statusEl.textContent = "Waiting for opponent to join...";
