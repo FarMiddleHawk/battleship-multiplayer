@@ -98,10 +98,13 @@ nextPhaseBtn.onclick = () => {
 };
 
 attackBtn.onclick = () => {
-  const r = parseInt(attackRow.value);
+  const rowLetter = attackRow.value.trim().toUpperCase();
+  const rowMap = { 'A': 0, 'B': 1, 'C': 2, 'D': 3, 'E': 4, 'F': 5, 'G': 6, 'H': 7, 'I': 8, 'J': 9 };
+  const r = rowMap[rowLetter];
   const c = parseInt(attackCol.value);
-  if (isNaN(r) || isNaN(c) || r < 0 || r >= SIZE || c < 0 || c >= SIZE) {
-    return alert("Enter valid coordinates (0-9)");
+  
+  if (r === undefined || isNaN(c) || c < 0 || c >= SIZE) {
+    return alert("Enter valid coordinates (Row: A-J, Col: 0-9)");
   }
   socket.emit("attack", { gameId: state.gameId, r, c }, (res) => {
     if (res.error) return alert(res.error);

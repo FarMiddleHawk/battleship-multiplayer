@@ -34,19 +34,63 @@
       </div>
 
       <div id="battleControls" hidden style="margin-bottom: 16px;">
-        <input type="number" id="attackRow" min="0" max="9" placeholder="Row (0-9)" style="width: 80px;" />
-        <input type="number" id="attackCol" min="0" max="9" placeholder="Col (0-9)" style="width: 80px;" />
+        <label>Row (A-J):</label>
+        <input type="text" id="attackRow" placeholder="A-J" maxlength="1" style="width: 50px;" />
+        <label>Col (0-9):</label>
+        <input type="number" id="attackCol" min="0" max="9" placeholder="0-9" style="width: 50px;" />
         <button id="attackBtn">Fire!</button>
       </div>
 
       <div class="boards">
         <div>
-          <h2>Your Board (Opponent attacks here)</h2>
-          <div id="yourBoard" class="board"></div>
+          <h2>Your Board</h2>
+          <p style="font-size: 12px; color: #94a3b8; margin: 0 0 8px;">Column →</p>
+          <div style="display: grid; grid-template-columns: 30px 1fr; gap: 8px;">
+            <div style="display: flex; flex-direction: column; justify-content: flex-end; gap: 10px; padding-bottom: 8px;">
+              <span style="text-align: center; font-size: 11px; color: #94a3b8; font-weight: bold;">Row ↓</span>
+              <span style="text-align: center; font-size: 11px; color: #94a3b8;">A</span>
+              <span style="text-align: center; font-size: 11px; color: #94a3b8;">B</span>
+              <span style="text-align: center; font-size: 11px; color: #94a3b8;">C</span>
+              <span style="text-align: center; font-size: 11px; color: #94a3b8;">D</span>
+              <span style="text-align: center; font-size: 11px; color: #94a3b8;">E</span>
+              <span style="text-align: center; font-size: 11px; color: #94a3b8;">F</span>
+              <span style="text-align: center; font-size: 11px; color: #94a3b8;">G</span>
+              <span style="text-align: center; font-size: 11px; color: #94a3b8;">H</span>
+              <span style="text-align: center; font-size: 11px; color: #94a3b8;">I</span>
+              <span style="text-align: center; font-size: 11px; color: #94a3b8;">J</span>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+              <div style="display: grid; grid-template-columns: repeat(10, 1fr); gap: 2px; font-size: 11px; color: #94a3b8; font-weight: bold; text-align: center; margin-bottom: 4px;">
+                <span>0</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span>
+              </div>
+              <div id="yourBoard" class="board"></div>
+            </div>
+          </div>
         </div>
         <div>
-          <h2>Enemy Board (You attack here)</h2>
-          <div id="enemyBoard" class="board"></div>
+          <h2>Enemy Board</h2>
+          <p style="font-size: 12px; color: #94a3b8; margin: 0 0 8px;">Column →</p>
+          <div style="display: grid; grid-template-columns: 30px 1fr; gap: 8px;">
+            <div style="display: flex; flex-direction: column; justify-content: flex-end; gap: 10px; padding-bottom: 8px;">
+              <span style="text-align: center; font-size: 11px; color: #94a3b8; font-weight: bold;">Row ↓</span>
+              <span style="text-align: center; font-size: 11px; color: #94a3b8;">A</span>
+              <span style="text-align: center; font-size: 11px; color: #94a3b8;">B</span>
+              <span style="text-align: center; font-size: 11px; color: #94a3b8;">C</span>
+              <span style="text-align: center; font-size: 11px; color: #94a3b8;">D</span>
+              <span style="text-align: center; font-size: 11px; color: #94a3b8;">E</span>
+              <span style="text-align: center; font-size: 11px; color: #94a3b8;">F</span>
+              <span style="text-align: center; font-size: 11px; color: #94a3b8;">G</span>
+              <span style="text-align: center; font-size: 11px; color: #94a3b8;">H</span>
+              <span style="text-align: center; font-size: 11px; color: #94a3b8;">I</span>
+              <span style="text-align: center; font-size: 11px; color: #94a3b8;">J</span>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+              <div style="display: grid; grid-template-columns: repeat(10, 1fr); gap: 2px; font-size: 11px; color: #94a3b8; font-weight: bold; text-align: center; margin-bottom: 4px;">
+                <span>0</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span>
+              </div>
+              <div id="enemyBoard" class="board"></div>
+            </div>
+          </div>
         </div>
       </div>
 
