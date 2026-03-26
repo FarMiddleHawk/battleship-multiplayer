@@ -31,6 +31,10 @@ const overlay = document.getElementById("overlay");
 const overlayTitle = document.getElementById("overlayTitle");
 const overlayText = document.getElementById("overlayText");
 const overlayBtn = document.getElementById("overlayBtn");
+const battleControls = document.getElementById("battleControls");
+const attackRow = document.getElementById("attackRow");
+const attackCol = document.getElementById("attackCol");
+const attackBtn = document.getElementById("attackBtn");
 
 createBtn.onclick = () => {
   console.log("Create game clicked");
@@ -93,6 +97,19 @@ nextPhaseBtn.onclick = () => {
   });
 };
 
+attackBtn.onclick = () => {
+  const r = parseInt(attackRow.value);
+  const c = parseInt(attackCol.value);
+  if (isNaN(r) || isNaN(c) || r < 0 || r >= SIZE || c < 0 || c >= SIZE) {
+    return alert("Enter valid coordinates (0-9)");
+  }
+  socket.emit("attack", { gameId: state.gameId, r, c }, (res) => {
+    if (res.error) return alert(res.error);
+    attackRow.value = "";
+    attackCol.value = "";
+  });
+};
+
 socket.on("gameStart", (data) => {
   state.phase = "placeP1";
   statusEl.textContent = "Place your ships. Opponent is also placing...";
@@ -106,8 +123,9 @@ socket.on("phaseUpdate", (data) => {
     statusEl.textContent = "Opponent placed their ships. Place yours now.";
   } else if (data.phase === "battle") {
     state.currentPlayer = data.currentPlayer;
+    battleControls.hidden = false;
     statusEl.textContent = state.playerId === data.currentPlayer 
-      ? "Your turn! Attack opponent board." 
+      ? "Your turn! Enter coordinates (Row, Col) and click Fire!" 
       : "Opponent's turn. Wait...";
     nextPhaseBtn.hidden = true;
     drawYourBoard();
@@ -119,8 +137,8 @@ socket.on("attackResult", (data) => {
   state.enemyGrid[data.r][data.c] = data.result === "hit" ? 2 : 3;
   state.currentPlayer = data.nextPlayer;
   statusEl.textContent = state.playerId === data.nextPlayer 
-    ? `Attack result: ${data.result.toUpperCase()}! Your turn.` 
-    : `Opponent attacked: ${data.result.toUpperCase()}. Their turn.`;
+    ? `Attack result: ${data.result.toUpperCase()}! Your turn. Enter coordinates.` 
+    : `Opponent attacked: ${data.result.toUpperCase()}. Opponent's turn.`;
   drawEnemyBoard();
 });
 
@@ -130,6 +148,7 @@ socket.on("gameOver", (data) => {
   overlay.classList.remove("hidden");
   overlayTitle.textContent = "Game Over";
   overlayText.textContent = `${winner} won the game!`;
+  battleControls.hidden = true;
 });
 
 socket.on("playerDisconnected", () => {
@@ -182,11 +201,7 @@ function drawEnemyBoard() {
       if (val === 2) cell.classList.add("hit");
       if (val === 3) cell.classList.add("miss");
       
-      if (state.phase === "battle" && state.currentPlayer === state.playerId && val !== 2 && val !== 3) {
-        cell.onclick = () => onAttack(r, c);
-      } else {
-        cell.disabled = true;
-      }
+      cell.disabled = true;
       enemyBoardEl.appendChild(cell);
     }
   }
@@ -198,12 +213,6 @@ function onPlaceCell(r, c) {
   const ok = tryPlaceShip(r, c, shipLen, state.orientation);
   if (!ok) return;
   drawYourBoard();
-}
-
-function onAttack(r, c) {
-  socket.emit("attack", { gameId: state.gameId, r, c }, (res) => {
-    if (res.error) return alert(res.error);
-  });
 }
 
 function rand(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }

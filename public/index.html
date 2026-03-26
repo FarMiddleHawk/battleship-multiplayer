@@ -33,13 +33,19 @@
         <button id="nextPhaseBtn" hidden>Confirm Placement</button>
       </div>
 
+      <div id="battleControls" hidden style="margin-bottom: 16px;">
+        <input type="number" id="attackRow" min="0" max="9" placeholder="Row (0-9)" style="width: 80px;" />
+        <input type="number" id="attackCol" min="0" max="9" placeholder="Col (0-9)" style="width: 80px;" />
+        <button id="attackBtn">Fire!</button>
+      </div>
+
       <div class="boards">
         <div>
-          <h2>Your Board</h2>
+          <h2>Your Board (Opponent attacks here)</h2>
           <div id="yourBoard" class="board"></div>
         </div>
         <div>
-          <h2>Enemy Board</h2>
+          <h2>Enemy Board (You attack here)</h2>
           <div id="enemyBoard" class="board"></div>
         </div>
       </div>
