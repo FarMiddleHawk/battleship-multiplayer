@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Battleship Multiplayer</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app">
+    <h1>⚓ Battleship Multiplayer</h1>
+    
+    <div id="lobby" class="screen">
+      <h2>Join or Create Game</h2>
+      <input type="text" id="gameIdInput" placeholder="Game ID (to join)" />
+      <button id="createBtn">Create Game</button>
+      <button id="joinBtn">Join Game</button>
+      <p id="gameIdDisplay"></p>
+    </div>
+
+    <div id="gameScreen" class="screen hidden">
+      <p id="status">Waiting for players...</p>
+
+      <div class="top-controls">
+        <label>Orientation:
+          <select id="orientation">
+            <option value="horizontal">Horizontal</option>
+            <option value="vertical">Vertical</option>
+          </select>
+        </label>
+        <button id="rotateBtn">Rotate</button>
+        <button id="randomPlaceBtn">Random Place</button>
+        <button id="nextPhaseBtn" hidden>Confirm Placement</button>
+      </div>
+
+      <div class="boards">
+        <div>
+          <h2>Your Board</h2>
+          <div id="yourBoard" class="board"></div>
+        </div>
+        <div>
+          <h2>Enemy Board</h2>
+          <div id="enemyBoard" class="board"></div>
+        </div>
+      </div>
+
+      <div id="overlay" class="overlay hidden">
+        <div class="overlay-card">
+          <h2 id="overlayTitle">Waiting</h2>
+          <p id="overlayText">Please wait for opponent.</p>
+          <button id="overlayBtn" hidden>Continue</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>
